@@ -48,7 +48,103 @@ public class CartSesionBeanFactory {
 }
 </pre>
 
+<pre>
+   +----------------------------------+
+|        CartSesionBeanFactory     |
++----------------------------------+
+| + createCartSessionBean(): CartSesionBeanLocal |
++----------------------------------+
 
-##Singelton method pattern
+</pre>
+## Singelton method pattern
 - Trong class **CartSesionBean**, chúng ta thấy một biến **static instance** được khai báo, cùng với một phương thức **getInstance()** để truy cập đến **instance** duy nhất của class này.
 - Constructor của **CartSesionBean** được đặt là **private**, nghĩa là không thể tạo mới đối tượng **CartSesionBean** từ bên ngoài class. Điều này đảm bảo rằng chỉ có một đối tượng **CartSesionBean** được tạo ra, và nó chỉ có thể được truy cập thông qua phương thức **getInstance()**.
+<pre>
+   package chd.com;
+
+import java.util.HashMap;
+import javax.annotation.PostConstruct;
+import javax.ejb.Singleton;
+import javax.ejb.Lock;
+import javax.ejb.LockType;
+
+@Singleton
+public class CartSesionBean implements CartSesionBeanLocal {
+    private HashMap<String, Integer> cart;
+    private String customerID;
+    private static CartSesionBean instance;
+
+    public CartSesionBean() {
+         
+    }
+
+    public static CartSesionBean getInstance() {
+        // Kiểm tra nếu instance chưa được khởi tạo, thì khởi tạo nó
+        if (instance == null) {
+            instance = new CartSesionBean();
+            instance.initialize(); // Gọi initialize() ở đây
+        }
+        // Trả về instance đã tồn tại
+        return instance;
+    }
+
+    @PostConstruct
+    public void initialize() {
+        // Khởi tạo giỏ hàng và các thông tin khách hàng khi đối tượng được tạo ra
+        this.cart = new HashMap<String, Integer>();
+        this.customerID = "0000";
+    }
+
+    @Override
+    public void setCustomer(String customerID) {
+        this.customerID = customerID;
+    }
+
+    @Override
+    public void addBook(String title, int quantity) {
+        if (cart == null) {
+            cart = new HashMap<String, Integer>(); // Khởi tạo cart nếu chưa tồn tại
+        }
+        Integer quan = cart.get(title);
+        int curQuan = (quan != null) ? quan : 0;
+        curQuan += quantity;
+        cart.put(title, curQuan);
+    }
+
+    @Override
+    public void removeBook(String title) {
+        if (cart != null) {
+            cart.remove(title);
+        }
+    }
+
+    @Override
+    public void checkout() {
+        // Xử lý thanh toán
+    }
+
+    @Lock(LockType.READ)
+    @Override
+    public HashMap<String, Integer> getCart() {
+        return this.cart;
+    }
+}       
+</pre>
+
+<pre>
+   +----------------------------------+
+|          CartSesionBean          |
++----------------------------------+
+| - cart: HashMap<String, Integer>|
+| - customerID: String             |
++----------------------------------+
+| + getInstance(): CartSesionBean |
+| + initialize(): void             |
+| + setCustomer(customerID: String): void |
+| + addBook(title: String, quantity: int): void |
+| + removeBook(title: String): void |
+| + checkout(): void               |
+| + getCart(): HashMap<String, Integer> |
++----------------------------------+
+
+</pre>
