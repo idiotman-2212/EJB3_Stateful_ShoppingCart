@@ -31,3 +31,24 @@
 - Trang checkout
 ![image](https://github.com/idiotman-2212/EJB3_Stateful_ShoppingCart/assets/82036270/7871bd31-8564-47ed-9133-9c9dc01c25be)
 
+#Design Pattern dùng trong dự án này.
+## Factory method pattern
+-Trong class **CartSesionBeanFactory**, phương thức **createCartSessionBean()** được sử dụng để tạo mới một đối tượng **CartSesionBean** và trả về nó. Điều này giúp tách rời quá trình tạo đối tượng từ client và cung cấp một cách linh hoạt để tạo ra các đối tượng phụ thuộc vào điều kiện hoặc yêu cầu cụ thể.
+<pre>
+   package chd.com;
+/**
+ *
+ * @author DELL
+ */
+public class CartSesionBeanFactory {
+     public static CartSesionBeanLocal createCartSessionBean() {
+        // Tạo và trả về một đối tượng CartSesionBean
+        return new CartSesionBean();
+    }
+}
+</pre>
+
+
+##Singelton method pattern
+- Trong class **CartSesionBean**, chúng ta thấy một biến **static instance** được khai báo, cùng với một phương thức **getInstance()** để truy cập đến **instance** duy nhất của class này.
+- Constructor của **CartSesionBean** được đặt là **private**, nghĩa là không thể tạo mới đối tượng **CartSesionBean** từ bên ngoài class. Điều này đảm bảo rằng chỉ có một đối tượng **CartSesionBean** được tạo ra, và nó chỉ có thể được truy cập thông qua phương thức **getInstance()**.
