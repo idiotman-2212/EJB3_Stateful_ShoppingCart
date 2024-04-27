@@ -31,7 +31,7 @@
 - Trang checkout
 ![image](https://github.com/idiotman-2212/EJB3_Stateful_ShoppingCart/assets/82036270/7871bd31-8564-47ed-9133-9c9dc01c25be)
 
-#Design Pattern dùng trong dự án này.
+# Design Pattern dùng trong dự án này.
 ## Factory method pattern
 -Trong class **CartSesionBeanFactory**, phương thức **createCartSessionBean()** được sử dụng để tạo mới một đối tượng **CartSesionBean** và trả về nó. Điều này giúp tách rời quá trình tạo đối tượng từ client và cung cấp một cách linh hoạt để tạo ra các đối tượng phụ thuộc vào điều kiện hoặc yêu cầu cụ thể.
 <pre>
