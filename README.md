@@ -16,7 +16,7 @@
    - Ngoài ra trong trang view, người dùng có thể chọn một số mặt hàng để loại bỏ bớt ra khỏi giỏ hàng bằng cách check vào các check box tương ứng của mặt hàng, sau đó, user click nút Remove. Thông tin được đưa về Controller, Controller chọn Session Bean tương ứng, cập    nhật Model và lấy thông tin trở về, đồng thời xác định View tương ứng và thực hiện trình bày kết quả thông qua Controller để đưa cho người dùng thông qua chức năng View Cart
    - Trong trang checkout, khi có sản phẩm trong giỏ hàng thì mới thanh toán. Ngược lại, nếu không có sản phầm nào trong giỏ hàng thì chuyển đến trang giao diện đầu tiên.
 
-* Mô hình tổng quát chức năng:
+* Mô hình tổng quát chức năng: <br>
    ![image](https://github.com/idiotman-2212/EJB3_Stateful_ShoppingCart/assets/82036270/cef38791-d279-4843-b445-ccc49ab2d1aa)
 
 - Trang giao diện
